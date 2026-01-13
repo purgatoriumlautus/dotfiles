@@ -1,0 +1,88 @@
+* {
+  font-family: Terminess Nerd Font;
+  font-size: 14;
+}
+
+window#waybar {
+  background-color: #c0c0c0;
+  border-bottom: 2px solid #808080;
+}
+
+#network,
+#clock,
+#tray,
+#workspaces,
+#pulseaudio {
+  background-color: #c0c0c0;
+  margin: 4px 2px;
+  padding: 2px 8px;
+  color: #000000;
+  border: 1px solid #808080;
+}
+
+#clock {
+  color: #000000;
+  font-weight: bold;
+}
+
+#pulseaudio:hover,
+#network:hover {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+#custom-applauncher {
+  background-color: #c0c0c0;
+  margin: 4px 2px;
+  padding: 2px 8px;
+  color: #000000;
+  border: 1px solid #808080;
+  font-weight: bold;
+}
+
+#custom-applauncher:hover {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+#tray menu {
+  background-color: #c0c0c0;
+  color: #000000;
+  border: 1px solid #808080;
+}
+
+#tray menu menuitem {
+  background-color: #c0c0c0;
+  color: #000000;
+}
+
+#tray menu menuitem:hover {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+#workspaces button {
+  all: initial;
+  font-family: Terminess Nerd Font;
+  font-size: 14;
+  min-width: 0;
+  color: #000000;
+  margin: 0 4px;
+  padding: 2px 6px;
+}
+
+#workspaces button:hover {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+#workspaces button.active {
+  background-color: #808080;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+#workspaces button.urgent {
+  background-color: #ff0000;
+  color: #ffffff;
+}

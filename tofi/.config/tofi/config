@@ -1,0 +1,34 @@
+# Tofi config - Win98 style
+
+# Appearance
+width = 400
+height = 300
+corner-radius = 0
+outline-width = 0
+border-width = 2
+border-color = #808080
+background-color = #c0c0c0
+padding-left = 16
+padding-top = 16
+
+# Font
+font = Terminess Nerd Font
+font-size = 12
+
+# Colors - Win98
+text-color = #000000
+prompt-color = #000000
+selection-color = #ffffff
+selection-background = #000080
+selection-background-padding = 4
+
+# Input
+prompt-text = "> "
+placeholder-text = "Run..."
+result-spacing = 4
+num-results = 8
+
+# Behavior
+hide-cursor = true
+history = true
+fuzzy-match = true
