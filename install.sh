@@ -25,6 +25,12 @@ stow -v -t ~ tofi
 stow -v -t ~ kitty
 stow -v -t ~ gtk
 
+# Ly display manager (requires sudo, run separately)
+echo ""
+echo "To install ly config (requires sudo):"
+echo "  sudo stow -v -t / ly"
+echo ""
+
 # Apply gsettings
 gsettings set org.gnome.desktop.interface gtk-theme 'Chicago95'
 gsettings set org.gnome.desktop.interface icon-theme 'Chicago95'

@@ -7,8 +7,8 @@
   "position": "top",
 
   "modules-left": [
-    "hyprland/workspaces",
-    "sway/workspaces"
+    "hyprland/workspaces"
+
   ],
 
   "modules-center": [],
@@ -70,6 +70,6 @@
     "format-muted": " ",
     "on-click": "pgrep pavucontrol >/dev/null 2>&1 && killall pavucontrol || pavucontrol",
     "tooltip": false
-  },
+  }
 
 }

@@ -11,10 +11,13 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 | Component | Tool |
 |-----------|------|
 | Compositor | Hyprland |
+| Wallpaper | Hyprpaper |
 | Bar | Waybar |
 | Launcher | Tofi |
 | Terminal | Kitty |
 | File Manager | Thunar |
+| Display Manager | Ly |
+| Clipboard | cliphist + wl-clipboard |
 | GTK Theme | Chicago95 |
 | Icons | Chicago95 |
 | Cursors | Chicago95_Cursor_White |
@@ -24,11 +27,12 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 
 ```
 dotfiles/
-├── hypr/.config/hypr/hyprland.conf
+├── hypr/.config/hypr/{hyprland.conf,hyprpaper.conf}
 ├── waybar/.config/waybar/{config.jsonc,style.css}
 ├── tofi/.config/tofi/config
 ├── kitty/.config/kitty/kitty.conf
 ├── gtk/.config/gtk-{2.0,3.0,4.0}/...
+├── ly/etc/ly/config.ini
 ├── install.sh
 └── README.md
 ```
@@ -37,7 +41,13 @@ dotfiles/
 
 ```bash
 # Core
-sudo pacman -S hyprland waybar kitty thunar tofi stow
+sudo pacman -S hyprland hyprpaper waybar kitty thunar tofi stow
+
+# Clipboard
+sudo pacman -S wl-clipboard cliphist
+
+# Display manager
+sudo pacman -S ly
 
 # Theming
 yay -S chicago95-gtk-theme-git chicago95-icon-theme-git xcursor-chicago95-git
@@ -101,6 +111,7 @@ hyprctl reload
 | `Super + Q` | Close window |
 | `Super + F` | Maximize window |
 | `Super + V` | Toggle floating |
+| `Super + \` | Clipboard history |
 | `Super + H/J/K/L` | Focus window |
 | `Super + Shift + H/J/K/L` | Move window |
 | `Super + 1-9` | Switch workspace |
@@ -117,9 +128,35 @@ hyprctl reload
 | White | `#ffffff` | Text on accent |
 | Black | `#000000` | Text |
 
+## Multi-Device Setup
+
+Monitor and wallpaper configs are commented out by default. After installing, edit for your device:
+
+```bash
+# Find your monitor names
+hyprctl monitors
+
+# Edit configs
+nvim ~/.config/hypr/hyprland.conf    # Uncomment monitor lines
+nvim ~/.config/hypr/hyprpaper.conf   # Uncomment wallpaper lines
+```
+
+## Ly Display Manager
+
+Ly config requires root to stow:
+
+```bash
+sudo stow -v -t / ly
+```
+
+Edit `ly/etc/ly/config.ini`:
+- Set `battery_id = null` on desktop
+- Set `battery_id = BAT0` or `BAT1` on laptop
+
 ## Uninstall
 
 ```bash
 cd ~/dotfiles
 stow -D hypr waybar tofi kitty gtk
+sudo stow -D -t / ly
 ```
