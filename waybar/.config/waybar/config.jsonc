@@ -14,8 +14,10 @@
   "modules-center": [],
 
   "modules-right": [
+    "bluetooth",
     "network",
     "pulseaudio",
+    "battery",
     "tray",
     "clock"
   ],
@@ -45,15 +47,22 @@
 
   "clock": {
     "format": "󰅐 {:%H:%M}",
-    "tooltip": false
+    "tooltip": true,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "format": {
+        "today": "<span color='#000080'><b>{}</b></span>"
+      }
+    },
+    "on-click": "gsimplecal"
   },
 
   "network": {
-    "format-wifi": "  {bandwidthDownBits}",
-    "format-ethernet": "  {bandwidthDownBits}",
+    "format-wifi": "  {bandwidthDownBits}", "format-ethernet": "  {bandwidthDownBits}",
     "format-disconnected": "󰤮  No Network",
     "interval": 5,
-    "tooltip": false
+    "tooltip": false,
+    "on-click": "sh -c 'pgrep -x nm-connection-e && pkill -x nm-connection-e || nm-connection-editor'"
   },
 
   "pulseaudio": {
@@ -69,6 +78,23 @@
     "nospacing": 1,
     "format-muted": " ",
     "on-click": "pgrep pavucontrol >/dev/null 2>&1 && killall pavucontrol || pavucontrol",
+    "tooltip": false
+  },
+
+  "battery": {
+    "bat": "BAT1",
+    "interval": 30,
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip": false
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱 {device_alias}",
+    "format-disabled": "󰂲",
+    "on-click": "blueman-manager",
     "tooltip": false
   }
 

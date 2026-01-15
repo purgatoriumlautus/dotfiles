@@ -25,16 +25,14 @@ stow -v -t ~ tofi
 stow -v -t ~ kitty
 stow -v -t ~ gtk
 
-# Ly display manager (requires sudo, run separately)
-echo ""
-echo "To install ly config (requires sudo):"
-echo "  sudo stow -v -t / ly"
-echo ""
-
 # Apply gsettings
 gsettings set org.gnome.desktop.interface gtk-theme 'Chicago95'
 gsettings set org.gnome.desktop.interface icon-theme 'Chicago95'
 gsettings set org.gnome.desktop.interface cursor-theme 'Chicago95_Cursor_White'
 gsettings set org.gnome.desktop.interface font-name 'Terminess Nerd Font 10'
 
-echo "Done! Reload Hyprland with: hyprctl reload"
+echo ""
+echo "Done! Next steps:"
+echo "  1. Enable hyprbars plugin: hyprpm enable hyprbars"
+echo "  2. Edit monitor/wallpaper configs for your device"
+echo "  3. Reload Hyprland: hyprctl reload"

@@ -12,7 +12,9 @@ window#waybar {
 #clock,
 #tray,
 #workspaces,
-#pulseaudio {
+#pulseaudio,
+#battery,
+#bluetooth {
   background-color: #c0c0c0;
   margin: 4px 2px;
   padding: 2px 8px;
@@ -77,7 +79,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-  background-color: #808080;
+  background-color: #000080;
   color: #ffffff;
   font-weight: bold;
 }

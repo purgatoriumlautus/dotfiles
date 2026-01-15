@@ -11,13 +11,22 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 | Component | Tool |
 |-----------|------|
 | Compositor | Hyprland |
+| Window Title Bars | hyprbars plugin |
 | Wallpaper | Hyprpaper |
 | Bar | Waybar |
 | Launcher | Tofi |
 | Terminal | Kitty |
+| Editor | Neovim |
 | File Manager | Thunar |
+| Image Viewer | gpicview |
+| Video Player | mpv |
 | Display Manager | Ly |
 | Clipboard | cliphist + wl-clipboard |
+| Calendar | gsimplecal |
+| Network Manager | nm-connection-editor |
+| Bluetooth | blueman |
+| Screenshots | grim + slurp + swappy |
+| Night Light | hyprsunset |
 | GTK Theme | Chicago95 |
 | Icons | Chicago95 |
 | Cursors | Chicago95_Cursor_White |
@@ -31,8 +40,8 @@ dotfiles/
 ├── waybar/.config/waybar/{config.jsonc,style.css}
 ├── tofi/.config/tofi/config
 ├── kitty/.config/kitty/kitty.conf
+├── nvim/.config/nvim/init.vim
 ├── gtk/.config/gtk-{2.0,3.0,4.0}/...
-├── ly/etc/ly/config.ini
 ├── install.sh
 └── README.md
 ```
@@ -41,7 +50,7 @@ dotfiles/
 
 ```bash
 # Core
-sudo pacman -S hyprland hyprpaper waybar kitty thunar tofi stow
+sudo pacman -S hyprland hyprpaper waybar kitty thunar tofi stow neovim
 
 # Clipboard
 sudo pacman -S wl-clipboard cliphist
@@ -49,11 +58,39 @@ sudo pacman -S wl-clipboard cliphist
 # Display manager
 sudo pacman -S ly
 
+# Hyprbars plugin (window title bars)
+yay -S hyprland-plugin-hyprbars
+# Then enable: hyprpm add https://github.com/hyprwm/hyprland-plugins && hyprpm enable hyprbars
+
+# Network manager GUI
+sudo pacman -S networkmanager nm-connection-editor
+
+# Bluetooth (laptop)
+sudo pacman -S bluez bluez-utils blueman
+
+# Night light
+sudo pacman -S hyprsunset
+
+# Audio/video
+sudo pacman -S pavucontrol playerctl mpv
+
+# Image viewer
+sudo pacman -S gpicview
+
+# Calendar
+sudo pacman -S gsimplecal
+
+# Screenshots
+sudo pacman -S grim slurp swappy
+
+# Brightness control
+sudo pacman -S brightnessctl
+
 # Theming
 yay -S chicago95-gtk-theme-git chicago95-icon-theme-git xcursor-chicago95-git
 
-# Font
-sudo pacman -S ttf-terminus-nerd
+# Fonts (browser symbols + terminal)
+sudo pacman -S ttf-terminus-nerd noto-fonts-emoji noto-fonts-cjk
 
 # Optional
 sudo pacman -S tumbler ffmpegthumbnailer  # thumbnails
@@ -76,11 +113,7 @@ git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # Stow individual packages
-stow hypr      # Hyprland config
-stow waybar    # Bar
-stow tofi      # Launcher
-stow kitty     # Terminal
-stow gtk       # All GTK theming
+stow hypr waybar tofi kitty nvim gtk
 
 # Or stow everything
 stow */
@@ -117,46 +150,81 @@ hyprctl reload
 | `Super + 1-9` | Switch workspace |
 | `Super + G` | Toggle group |
 | `Super + Tab` | Cycle group windows |
+| `Print` | Screenshot region → swappy |
+| `Shift + Print` | Screenshot fullscreen → swappy |
+| `XF86 keys` | Brightness, volume, media |
+
+## Waybar Click Actions
+
+| Module | Click Action |
+|--------|--------------|
+| Bluetooth | Toggle blueman-manager |
+| Network | Toggle nm-connection-editor |
+| Pulseaudio | Toggle pavucontrol |
+| Clock | Open gsimplecal calendar |
 
 ## Color Palette
 
 | Color | Hex | Usage |
 |-------|-----|-------|
-| Silver | `#c0c0c0` | Background |
+| Silver | `#c0c0c0` | Background, title bars |
 | Grey | `#808080` | Borders, inactive |
-| Navy | `#000080` | Accent, selection |
+| Navy | `#000080` | Accent, active workspace, title text |
 | White | `#ffffff` | Text on accent |
 | Black | `#000000` | Text |
 
 ## Multi-Device Setup
 
-Monitor and wallpaper configs are commented out by default. After installing, edit for your device:
+### Monitors & Wallpapers
+Monitor and wallpaper configs are commented out by default. After installing:
 
 ```bash
 # Find your monitor names
 hyprctl monitors
 
 # Edit configs
-nvim ~/.config/hypr/hyprland.conf    # Uncomment monitor lines
-nvim ~/.config/hypr/hyprpaper.conf   # Uncomment wallpaper lines
+nvim ~/.config/hypr/hyprland.conf    # Uncomment/edit monitor lines
+nvim ~/.config/hypr/hyprpaper.conf   # Uncomment/edit wallpaper lines
+```
+
+### Battery (Waybar)
+Edit `waybar/.config/waybar/config.jsonc` - change `"bat": "BAT1"` to match your device:
+- Laptop: usually `BAT0` or `BAT1`
+- Desktop: remove battery module from `modules-right`
+
+### Bluetooth (Laptop only)
+Comment out in `hyprland.conf` on desktop:
+```bash
+# exec-once = blueman-applet
+```
+
+### Brightness Keys
+The brightness binds use `nv_backlight` (NVIDIA laptop). Change in `hyprland.conf`:
+```bash
+# For other devices, find your backlight:
+ls /sys/class/backlight/
+# Then update the brightnessctl -d parameter
 ```
 
 ## Ly Display Manager
 
-Ly config requires root to stow:
+Ly config is at `/etc/ly/config.ini` (requires sudo). Key settings:
+```ini
+# Laptop
+battery_id = BAT1
 
-```bash
-sudo stow -v -t / ly
+# Auto-login to Hyprland
+auto_login_session = hyprland
+
+# Customizations
+animation = gameoflife
+vi_mode = true
+clock = %c
 ```
-
-Edit `ly/etc/ly/config.ini`:
-- Set `battery_id = null` on desktop
-- Set `battery_id = BAT0` or `BAT1` on laptop
 
 ## Uninstall
 
 ```bash
 cd ~/dotfiles
-stow -D hypr waybar tofi kitty gtk
-sudo stow -D -t / ly
+stow -D hypr waybar tofi kitty nvim gtk
 ```
