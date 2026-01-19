@@ -1,0 +1,11 @@
+font=Terminess Nerd Font Mono 10
+background-color=#c0c0c0
+text-color=#000000
+border-color=#808080
+border-size=1
+border-radius=0
+default-timeout=5000
+width=250
+height=80
+margin=10
+padding=8

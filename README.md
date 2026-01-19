@@ -16,6 +16,7 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 | Bar | Waybar |
 | Launcher | Tofi |
 | Terminal | Kitty |
+| Terminal Multiplexer | tmux |
 | Editor | Neovim |
 | File Manager | Thunar |
 | Image Viewer | gpicview |
@@ -26,6 +27,8 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 | Network Manager | nm-connection-editor |
 | Bluetooth | blueman |
 | Screenshots | grim + slurp + swappy |
+| Screen Recording | wf-recorder |
+| Notifications | mako |
 | Night Light | hyprsunset |
 | GTK Theme | Chicago95 |
 | Icons | Chicago95 |
@@ -36,10 +39,12 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 
 ```
 dotfiles/
-├── hypr/.config/hypr/{hyprland.conf,hyprpaper.conf}
+├── hypr/.config/hypr/{hyprland.conf,hyprpaper.conf,scripts/}
 ├── waybar/.config/waybar/{config.jsonc,style.css}
 ├── tofi/.config/tofi/config
 ├── kitty/.config/kitty/kitty.conf
+├── tmux/.config/tmux/tmux.conf
+├── mako/.config/mako/config
 ├── nvim/.config/nvim/init.vim
 ├── gtk/.config/gtk-{2.0,3.0,4.0}/...
 ├── install.sh
@@ -50,7 +55,7 @@ dotfiles/
 
 ```bash
 # Core
-sudo pacman -S hyprland hyprpaper waybar kitty thunar tofi stow neovim
+sudo pacman -S hyprland hyprpaper waybar kitty thunar tofi stow neovim tmux
 
 # Clipboard
 sudo pacman -S wl-clipboard cliphist
@@ -83,6 +88,9 @@ sudo pacman -S gsimplecal
 # Screenshots
 sudo pacman -S grim slurp swappy
 
+# Screen recording & notifications
+sudo pacman -S wf-recorder mako libnotify
+
 # Brightness control
 sudo pacman -S brightnessctl
 
@@ -113,7 +121,7 @@ git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # Stow individual packages
-stow hypr waybar tofi kitty nvim gtk
+stow hypr waybar tofi kitty tmux mako nvim gtk
 
 # Or stow everything
 stow */
@@ -152,6 +160,8 @@ hyprctl reload
 | `Super + Tab` | Cycle group windows |
 | `Print` | Screenshot region → swappy |
 | `Shift + Print` | Screenshot fullscreen → swappy |
+| `Super + Print` | Toggle screen recording |
+| `Super + Shift + Print` | Toggle region recording |
 | `XF86 keys` | Brightness, volume, media |
 
 ## Waybar Click Actions
@@ -226,5 +236,5 @@ clock = %c
 
 ```bash
 cd ~/dotfiles
-stow -D hypr waybar tofi kitty nvim gtk
+stow -D hypr waybar tofi kitty tmux mako nvim gtk
 ```
