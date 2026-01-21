@@ -27,6 +27,7 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 | Network Manager | nm-connection-editor |
 | Bluetooth | blueman |
 | Screenshots | grim + slurp + swappy |
+| Power Menu | tofi (script) |
 | Screen Recording | wf-recorder |
 | Notifications | mako |
 | Night Light | hyprsunset |
@@ -152,6 +153,7 @@ hyprctl reload
 | `Super + Q` | Close window |
 | `Super + F` | Maximize window |
 | `Super + V` | Toggle floating |
+| `Super + Shift + E` | Power menu (sleep, logout, reboot, shutdown) |
 | `Super + \` | Clipboard history |
 | `Super + H/J/K/L` | Focus window |
 | `Super + Shift + H/J/K/L` | Move window |
