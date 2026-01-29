@@ -171,6 +171,81 @@ hyprctl reload
 | Pulseaudio | Toggle pavucontrol |
 | Clock | Open gsimplecal calendar |
 
+## Neovim Keybinds
+
+### General
+
+| Key | Action |
+|-----|--------|
+| `\n` | Toggle file tree |
+| `\e` | Toggle focus (tree ↔ file) |
+| `\1-9` | Go to tab 1-9 |
+| `\0` | Go to last tab |
+| `Ctrl+a` | Select all |
+| `Esc` | Clear search highlight |
+| `:Q` | Quit all (no save) |
+| `:WQ` | Save all + quit |
+
+### File Tree (nvim-tree)
+
+| Key | Action |
+|-----|--------|
+| `h` | Close folder / go up |
+| `l` | Open folder / open file |
+| `H` | Change root to parent |
+| `L` | Change root to selected dir |
+| `Enter` | Open in new tab (stay in tree) |
+| `o` | Open in current tab |
+| `Ctrl+v` | Open in vertical split |
+| `Ctrl+h` | Open in horizontal split |
+| `a` | Create file/folder |
+| `d` | Delete |
+| `r` | Rename |
+| `g?` | Show all keybinds |
+
+### Telescope (Fuzzy Finder)
+
+| Key | Action |
+|-----|--------|
+| `\ff` | Find files |
+| `\fg` | Grep in project |
+| `\fb` | Open buffers |
+| `\fr` | Recent files |
+| `\fh` | Search help |
+| `Enter` | Open in new tab |
+| `Ctrl+v` | Open in vertical split |
+| `Ctrl+h` | Open in horizontal split |
+
+### LSP
+
+| Key | Action |
+|-----|--------|
+| `gd` | Go to definition |
+| `gr` | Find references |
+| `K` | Hover documentation |
+| `\rn` | Rename symbol |
+| `\ca` | Code actions |
+| `[d` | Previous diagnostic |
+| `]d` | Next diagnostic |
+
+### Git (gitsigns)
+
+| Key | Action |
+|-----|--------|
+| `]c` | Next change (hunk) |
+| `[c` | Previous change |
+| `\hp` | Preview hunk |
+| `\hr` | Reset hunk |
+| `\hb` | Blame line |
+
+### Sessions
+
+| Key | Action |
+|-----|--------|
+| `\ss` | Restore session (cwd) |
+| `\sl` | Restore last session |
+| `\sd` | Don't save session on exit |
+
 ## Color Palette
 
 | Color | Hex | Usage |
