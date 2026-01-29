@@ -40,17 +40,22 @@ A minimalist Windows 98 inspired rice for Hyprland on Arch Linux.
 
 ```
 dotfiles/
-├── hypr/.config/hypr/{hyprland.conf,hyprpaper.conf,scripts/}
-├── waybar/.config/waybar/{config.jsonc,style.css}
-├── tofi/.config/tofi/config
-├── kitty/.config/kitty/kitty.conf
-├── tmux/.config/tmux/tmux.conf
-├── mako/.config/mako/config
-├── nvim/.config/nvim/init.vim
-├── gtk/.config/gtk-{2.0,3.0,4.0}/...
-├── install.sh
+├── hypr/.config/hypr/          → Hyprland, hyprpaper, hyprsunset, scripts
+├── waybar/.config/waybar/      → Bar config and styling
+├── tofi/.config/tofi/          → App launcher
+├── kitty/.config/kitty/        → Terminal
+├── tmux/.config/tmux/          → Terminal multiplexer
+├── mako/.config/mako/          → Notifications
+├── nvim/.config/nvim/          → Editor
+├── gtk/.config/gtk-*/          → GTK theming
+├── xfce4/.config/xfce4/        → Thunar helpers (terminal = kitty)
+├── swappy/.config/swappy/      → Screenshot editor
+├── ly/                         → Display manager (system config, manual copy)
+├── grub/                       → GRUB theme (system config, manual copy)
 └── README.md
 ```
+
+**Note:** `ly/` and `grub/` contain system-level configs that can't be stowed. See [System Configs](#system-configs) for installation.
 
 ## Dependencies
 
@@ -107,25 +112,15 @@ sudo pacman -S tumbler ffmpegthumbnailer  # thumbnails
 
 ## Installation
 
-### Quick Install
-
-```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-./install.sh
-```
-
-### Manual with Stow
-
 ```bash
 git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # Stow individual packages
-stow hypr waybar tofi kitty tmux mako nvim gtk
+stow hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy
 
-# Or stow everything
-stow */
+# Or stow all user configs (excludes ly/ and grub/)
+stow hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy
 ```
 
 ### Apply GTK Theme
@@ -160,10 +155,11 @@ hyprctl reload
 | `Super + 1-9` | Switch workspace |
 | `Super + G` | Toggle group |
 | `Super + Tab` | Cycle group windows |
-| `Print` | Screenshot region → swappy |
-| `Shift + Print` | Screenshot fullscreen → swappy |
+| `Print` | Screenshot region → swappy → file + clipboard |
+| `Shift + Print` | Screenshot fullscreen → swappy → file + clipboard |
 | `Super + Print` | Toggle screen recording |
 | `Super + Shift + Print` | Toggle region recording |
+| `Super + \`` | Enter VM passthrough mode (only Super+* keys work) |
 | `XF86 keys` | Brightness, volume, media |
 
 ## Waybar Click Actions
@@ -234,9 +230,37 @@ vi_mode = true
 clock = %c
 ```
 
+## System Configs
+
+These configs require root and can't be stowed to home. Copy manually.
+
+### GRUB Theme (Shodan)
+
+```bash
+# Copy theme to grub themes directory
+sudo cp -r ~/dotfiles/grub/Shodan /boot/grub/themes/
+
+# Edit grub config
+sudo nvim /etc/default/grub
+# Add/edit: GRUB_THEME="/boot/grub/themes/Shodan/theme.txt"
+
+# Regenerate grub config
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Ly Display Manager
+
+```bash
+# Copy config (backup existing first)
+sudo cp /etc/ly/config.ini /etc/ly/config.ini.bak
+sudo cp ~/dotfiles/ly/etc/ly/config.ini /etc/ly/config.ini
+
+# Or edit manually - key settings in ly/ folder
+```
+
 ## Uninstall
 
 ```bash
 cd ~/dotfiles
-stow -D hypr waybar tofi kitty tmux mako nvim gtk
+stow -D hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy
 ```

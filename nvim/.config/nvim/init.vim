@@ -17,6 +17,9 @@ set hlsearch
 " Интерактивный поиск
 set incsearch
 
+" Убрать подсветку после поиска
+autocmd CmdlineLeave /,\? :nohlsearch
+
 " Размер табов - 2
 set tabstop=2
 set softtabstop=2
