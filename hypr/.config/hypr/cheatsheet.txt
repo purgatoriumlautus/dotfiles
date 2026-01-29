@@ -1,0 +1,48 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              KEYBINDS CHEATSHEET                             ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  HYPRLAND                                                                    ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  Super+Return     Terminal          │  Super+Q          Close window         ║
+║  Super+D          App launcher      │  Super+F          Maximize             ║
+║  Super+E          File manager      │  Super+V          Toggle floating      ║
+║  Super+Shift+E    Power menu        │  Super+\          Clipboard history    ║
+║  Super+H/J/K/L    Focus window      │  Super+Shift+HJKL Move window          ║
+║  Super+1-9        Workspace         │  Super+G          Toggle group         ║
+║  Print            Screenshot        │  Super+Print      Record screen        ║
+║  Super+?          This cheatsheet   │  Super+`          VM passthrough       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  TMUX  (prefix = Ctrl+b)                                                     ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  Alt+h/j/k/l      Navigate panes    │  Ctrl+Alt+h/j/k/l Resize panes         ║
+║  Alt+\            Vertical split    │  Alt+-            Horizontal split     ║
+║  Alt+Enter        New window        │  Alt+1-9          Switch window        ║
+║  Alt+c            Kill pane         │  Alt+q            Kill window          ║
+║  Alt+d            Detach            │  Alt+Q            Kill session         ║
+║  Alt+s            Session picker    │  Alt+n            New session          ║
+║  Alt+r            Reload config     │  Alt+z            Copy mode            ║
+║  Alt+/            Search down       │  Alt+?            Search up            ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  NEOVIM  (leader = \)                                                        ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  \n               Toggle tree       │  \e               Focus tree/file      ║
+║  \ff              Find files        │  \fg              Grep project         ║
+║  \fb              Buffers           │  \fr              Recent files         ║
+║  \1-9             Go to tab         │  Ctrl+a           Select all           ║
+║  gd               Go to definition  │  gr               References           ║
+║  K                Hover docs        │  \rn              Rename symbol        ║
+║  \ca              Code actions      │  [d / ]d          Prev/next error      ║
+║  ]c / [c          Next/prev hunk    │  \hp              Preview hunk         ║
+║  \hr              Reset hunk        │  \hb              Blame line           ║
+║  \ss              Restore session   │  \sD              Delete session       ║
+║  :Q               Quit all          │  :WQ              Save all + quit      ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  NVIM-TREE                                                                   ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  h/l              Navigate dirs     │  H/L              Change root          ║
+║  Enter            Open in new tab   │  o                Open in same tab     ║
+║  Ctrl+v           Vertical split    │  Ctrl+h           Horizontal split     ║
+║  a                Create file       │  d                Delete               ║
+║  r                Rename            │  g?               Show all keybinds    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+                                Press q to close

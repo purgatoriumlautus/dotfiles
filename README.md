@@ -244,7 +244,48 @@ hyprctl reload
 |-----|--------|
 | `\ss` | Restore session (cwd) |
 | `\sl` | Restore last session |
+| `\sD` | Delete session for cwd |
 | `\sd` | Don't save session on exit |
+
+**Skip session restore:** `NVIM_NO_SESSION=1 nvim` or `nvim +NoSession`
+
+## Tmux Keybinds
+
+### Navigation
+
+| Key | Action |
+|-----|--------|
+| `Alt+h/j/k/l` | Navigate panes (vim-style) |
+| `Ctrl+Alt+h/j/k/l` | Resize panes |
+| `Alt+1-9` | Switch to window 1-9 |
+
+### Windows & Panes
+
+| Key | Action |
+|-----|--------|
+| `Alt+\` | Vertical split |
+| `Alt+-` | Horizontal split |
+| `Alt+Enter` | New window |
+| `Alt+c` | Kill pane |
+| `Alt+q` | Kill window |
+
+### Sessions
+
+| Key | Action |
+|-----|--------|
+| `Alt+d` | Detach |
+| `Alt+s` | Session picker |
+| `Alt+n` | New session |
+| `Alt+Q` | Kill session (confirm) |
+
+### Other
+
+| Key | Action |
+|-----|--------|
+| `Alt+z` | Copy mode |
+| `Alt+/` | Search down |
+| `Alt+?` | Search up |
+| `Alt+r` | Reload config |
 
 ## Color Palette
 

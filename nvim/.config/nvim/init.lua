@@ -36,15 +36,22 @@ vim.cmd('filetype plugin indent on')
 -- Clear search highlight with Esc
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 
--- Auto-restore session (add file as new tab if provided)
+-- Auto-restore session (skip with NVIM_NO_SESSION=1 or nvim +NoSession)
+vim.api.nvim_create_user_command('NoSession', function()
+  vim.g.no_session = true
+end, {})
+
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
+    -- Skip if NVIM_NO_SESSION=1 or :NoSession was called
+    if vim.env.NVIM_NO_SESSION == '1' or vim.g.no_session then
+      return
+    end
+
     local args = vim.fn.argc()
     if args == 0 then
-      -- No args = just restore session
       require('persistence').load()
     else
-      -- Has args = restore session, then open files as tabs
       local files = {}
       for i = 0, args - 1 do
         table.insert(files, vim.fn.argv(i))
@@ -287,6 +294,15 @@ require('lazy').setup({
       { '<leader>ss', function() require('persistence').load() end, desc = 'Restore session (cwd)' },
       { '<leader>sl', function() require('persistence').load({ last = true }) end, desc = 'Restore last session' },
       { '<leader>sd', function() require('persistence').stop() end, desc = "Don't save session" },
+      { '<leader>sD', function()
+          local dir = vim.fn.getcwd():gsub('/', '%%')
+          local session_file = vim.fn.stdpath('state') .. '/sessions/' .. dir .. '.vim'
+          if vim.fn.delete(session_file) == 0 then
+            print('Deleted session: ' .. session_file)
+          else
+            print('No session found for this directory')
+          end
+        end, desc = 'Delete session for cwd' },
     },
   },
 
