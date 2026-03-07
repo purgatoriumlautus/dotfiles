@@ -91,11 +91,6 @@ alias gb="git branch"
 alias glog="git log --oneline --graph"
 
 # -----------------
-# zoxide (z replacement)
-# -----------------
-eval "$(zoxide init zsh)"
-
-# -----------------
 # NVM (Node Version Manager)
 # -----------------
 export NVM_DIR="$HOME/.nvm"
@@ -158,3 +153,8 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 bindkey -r '\ec'
 bindkey '^G' fzf-cd-widget
+
+# -----------------
+# zoxide (z replacement) — must be last
+# -----------------
+eval "$(zoxide init zsh)"
