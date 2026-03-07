@@ -14,10 +14,8 @@
   "modules-center": [],
 
   "modules-right": [
-    "bluetooth",
     "network",
     "pulseaudio",
-    "battery",
     "tray",
     "hyprland/language",
     "clock"
