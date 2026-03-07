@@ -2,6 +2,10 @@
 
 System-specific context for this dotfiles repository.
 
+## New Machine Setup
+
+If configs haven't been adjusted for this machine yet, read `PC_SETUP.md` and `MIGRATION_PROMPT.md` (Phase 6) for the full checklist. The `laptop` branch preserves the original laptop config. Detect hardware first, then adjust configs on `master`.
+
 ## Philosophy
 
 **Performance-driven minimalism.** Every choice optimizes for:
@@ -28,7 +32,7 @@ The Win98/Chicago95 aesthetic is a side effect, not the goal. Lightweight interf
 | Terminal | Kitty | GPU-accelerated, fast |
 | Editor | Neovim | Modal editing, lightweight |
 | File Manager | Thunar | GTK, lightweight, does the job |
-| GPU | GTX 1060 (nouveau) | Proprietary drivers don't work on this machine |
+| GPU | GTX 1060 (nouveau) | Proprietary drivers don't work on laptop; check PC GPU |
 
 ## Stow Structure
 
