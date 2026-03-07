@@ -1,6 +1,6 @@
 * {
   font-family: Terminess Nerd Font;
-  font-size: 14;
+  font-size: 14px;
 }
 
 window#waybar {
@@ -14,6 +14,7 @@ window#waybar {
 #workspaces,
 #pulseaudio,
 #battery,
+#language,
 #bluetooth {
   background-color: #c0c0c0;
   margin: 4px 2px;
@@ -29,20 +30,6 @@ window#waybar {
 
 #pulseaudio:hover,
 #network:hover {
-  background-color: #000080;
-  color: #ffffff;
-}
-
-#custom-applauncher {
-  background-color: #c0c0c0;
-  margin: 4px 2px;
-  padding: 2px 8px;
-  color: #000000;
-  border: 1px solid #808080;
-  font-weight: bold;
-}
-
-#custom-applauncher:hover {
   background-color: #000080;
   color: #ffffff;
 }
@@ -66,7 +53,7 @@ window#waybar {
 #workspaces button {
   all: initial;
   font-family: Terminess Nerd Font;
-  font-size: 14;
+  font-size: 14px;
   min-width: 0;
   color: #000080;
   margin: 0 4px;

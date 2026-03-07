@@ -6,64 +6,25 @@ vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH
 -- ===================
 -- Settings
 -- ===================
-vim.opt.encoding = 'utf-8'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-
-
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.smarttab = true
-vim.opt.autoindent = true
 vim.opt.smartindent = true
 
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wildmode = 'longest,list'
-vim.opt.mouse = 'a'
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.ttyfast = true
 vim.opt.scrolloff = 30           -- cursor stays centered (your 'so=30')
 vim.opt.termguicolors = true     -- needed for modern colorschemes
-
-vim.cmd('syntax on')
-vim.cmd('filetype plugin indent on')
 
 -- Clear search highlight with Esc
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 
--- Auto-restore session (skip with NVIM_NO_SESSION=1 or nvim +NoSession)
-vim.api.nvim_create_user_command('NoSession', function()
-  vim.g.no_session = true
-end, {})
-
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    -- Skip if NVIM_NO_SESSION=1 or :NoSession was called
-    if vim.env.NVIM_NO_SESSION == '1' or vim.g.no_session then
-      return
-    end
-
-    local args = vim.fn.argc()
-    if args == 0 then
-      require('persistence').load()
-    else
-      local files = {}
-      for i = 0, args - 1 do
-        table.insert(files, vim.fn.argv(i))
-      end
-      require('persistence').load()
-      for _, file in ipairs(files) do
-        vim.cmd('tabnew ' .. vim.fn.fnameescape(file))
-      end
-    end
-  end,
-  nested = true,
-})
 
 -- ===================
 -- Keymaps
@@ -95,7 +56,7 @@ vim.api.nvim_create_user_command('Wq', 'wqa', {})
 -- ===================
 -- Bootstrap: auto-install lazy.nvim if not present
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     'git', 'clone', '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
@@ -281,30 +242,6 @@ require('lazy').setup({
     end,
   },
 
-  -- Session persistence (like tmux)
-  {
-    'folke/persistence.nvim',
-    event = 'BufReadPre',  -- load before reading a file
-    config = function()
-      require('persistence').setup({
-        dir = vim.fn.stdpath('state') .. '/sessions/',
-      })
-    end,
-    keys = {
-      { '<leader>ss', function() require('persistence').load() end, desc = 'Restore session (cwd)' },
-      { '<leader>sl', function() require('persistence').load({ last = true }) end, desc = 'Restore last session' },
-      { '<leader>sd', function() require('persistence').stop() end, desc = "Don't save session" },
-      { '<leader>sD', function()
-          local dir = vim.fn.getcwd():gsub('/', '%%')
-          local session_file = vim.fn.stdpath('state') .. '/sessions/' .. dir .. '.vim'
-          if vim.fn.delete(session_file) == 0 then
-            print('Deleted session: ' .. session_file)
-          else
-            print('No session found for this directory')
-          end
-        end, desc = 'Delete session for cwd' },
-    },
-  },
 
   -- LSP installer
   {
@@ -359,7 +296,7 @@ require('lazy').setup({
               settings = {
                 yaml = {
                   schemas = {
-                    kubernetes = '/*.yaml',
+                    kubernetes = 'k8s/**/*.yaml',
                   },
                 },
               },
@@ -421,5 +358,22 @@ require('lazy').setup({
       })
     end,
   },
-
+{
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  },
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
+    },
+  },
+},
 })

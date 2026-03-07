@@ -1,0 +1,19 @@
+# Migration planning (not part of dotfiles)
+MIGRATION_PROMPT.md
+
+# Backup files
+*.bak
+*.swp
+*.swo
+*~
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+id_*
+*.key
+
+# Shell history
+.zsh_history
+.bash_history

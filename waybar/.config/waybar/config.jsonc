@@ -19,6 +19,7 @@
     "pulseaudio",
     "battery",
     "tray",
+    "hyprland/language",
     "clock"
   ],
 
@@ -28,15 +29,11 @@
     "tooltip": false
   },
 
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": false,
-    "tooltip": false
-  },
-
-  "custom/applauncher": {
-    "format":"⯘",
-    "on-click": "tofi-drun --drun-launch=true",
+  "hyprland/language":{
+    "format": "{}",
+    "format-en": "EN",
+    "format-ru": "RU",
+    "format-uk": "UA",
     "tooltip": false
   },
 

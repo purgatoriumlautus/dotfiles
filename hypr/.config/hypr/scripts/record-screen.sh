@@ -10,5 +10,5 @@ if pgrep -x wf-recorder > /dev/null; then
 else
     FILENAME="$VIDEO_DIR/recording-$(date +%Y%m%d-%H%M%S).mp4"
     notify-send "Recording started"
-    wf-recorder -f "$FILENAME" &
+    wf-recorder -a -r 60 -b 6000 -f "$FILENAME" &
 fi

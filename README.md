@@ -47,6 +47,7 @@ dotfiles/
 ├── tmux/.config/tmux/          → Terminal multiplexer
 ├── mako/.config/mako/          → Notifications
 ├── nvim/.config/nvim/          → Editor
+├── zsh/.zshrc                  → Shell config (stows to ~/)
 ├── gtk/.config/gtk-*/          → GTK theming
 ├── xfce4/.config/xfce4/        → Thunar helpers (terminal = kitty)
 ├── swappy/.config/swappy/      → Screenshot editor
@@ -113,14 +114,11 @@ sudo pacman -S tumbler ffmpegthumbnailer  # thumbnails
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
+git clone https://github.com/purgatoriumlautus/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
-# Stow individual packages
-stow hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy
-
-# Or stow all user configs (excludes ly/ and grub/)
-stow hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy
+# Stow all user configs (excludes ly/ and grub/)
+stow hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy zsh
 ```
 
 ### Apply GTK Theme
@@ -152,14 +150,20 @@ hyprctl reload
 | `Super + \` | Clipboard history |
 | `Super + H/J/K/L` | Focus window |
 | `Super + Shift + H/J/K/L` | Move window |
+| `Super + Ctrl + H/J/K/L` | Move window into group |
 | `Super + 1-9` | Switch workspace |
+| `Super + Shift + 1-9` | Move window to workspace |
 | `Super + G` | Toggle group |
-| `Super + Tab` | Cycle group windows |
+| `Super + Shift + G` | Move window out of group |
+| `Super + Tab` | Cycle group windows forward |
+| `Super + Shift + Tab` | Cycle group windows backward |
 | `Print` | Screenshot region → swappy → file + clipboard |
 | `Shift + Print` | Screenshot fullscreen → swappy → file + clipboard |
 | `Super + Print` | Toggle screen recording |
 | `Super + Shift + Print` | Toggle region recording |
 | `Super + \`` | Enter VM passthrough mode (only Super+* keys work) |
+| `Mod + Left drag` | Move window |
+| `Mod + Right drag` | Resize window |
 | `XF86 keys` | Brightness, volume, media |
 
 ## Waybar Click Actions
@@ -237,17 +241,6 @@ hyprctl reload
 | `\hp` | Preview hunk |
 | `\hr` | Reset hunk |
 | `\hb` | Blame line |
-
-### Sessions
-
-| Key | Action |
-|-----|--------|
-| `\ss` | Restore session (cwd) |
-| `\sl` | Restore last session |
-| `\sD` | Delete session for cwd |
-| `\sd` | Don't save session on exit |
-
-**Skip session restore:** `NVIM_NO_SESSION=1 nvim` or `nvim +NoSession`
 
 ## Tmux Keybinds
 
@@ -341,7 +334,7 @@ battery_id = BAT1
 auto_login_session = hyprland
 
 # Customizations
-animation = gameoflife
+animation = colormix
 vi_mode = true
 clock = %c
 ```
@@ -374,9 +367,21 @@ sudo cp ~/dotfiles/ly/etc/ly/config.ini /etc/ly/config.ini
 # Or edit manually - key settings in ly/ folder
 ```
 
+## Security
+
+| Layer | Config | Notes |
+|-------|--------|-------|
+| Firewall | nftables | Default drop on input/forward, no open ports |
+| SSH | sshd (disabled) | Key-only auth, no root login, AllowUsers 0\_o |
+| Brute-force | fail2ban | Active, defense-in-depth for sshd |
+| DNS | systemd-resolved | Only listener, localhost:53 |
+| Filesystem | btrfs | Subvols: @, @home, @pkg, @log with zstd:3 |
+
+No services are exposed to the network. The nftables ruleset allows only loopback, established connections, and ICMP.
+
 ## Uninstall
 
 ```bash
 cd ~/dotfiles
-stow -D hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy
+stow -D hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy zsh
 ```

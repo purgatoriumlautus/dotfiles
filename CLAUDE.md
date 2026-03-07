@@ -24,7 +24,7 @@ The Win98/Chicago95 aesthetic is a side effect, not the goal. Lightweight interf
 |-----------|--------|-----|
 | Distro | Arch Linux | Rolling release, minimal base, AUR |
 | Compositor | Hyprland | Wayland, tiling, performant, active development |
-| Shell | zsh | Tab completion, syntax highlighting (moving to minimal config) |
+| Shell | zsh | Tab completion, vi mode, minimal config (no frameworks) |
 | Terminal | Kitty | GPU-accelerated, fast |
 | Editor | Neovim | Modal editing, lightweight |
 | File Manager | Thunar | GTK, lightweight, does the job |
