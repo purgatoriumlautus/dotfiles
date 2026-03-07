@@ -70,9 +70,9 @@ sudo pacman -S wl-clipboard cliphist
 # Display manager
 sudo pacman -S ly
 
-# Hyprbars plugin (window title bars)
-yay -S hyprland-plugin-hyprbars
-# Then enable: hyprpm add https://github.com/hyprwm/hyprland-plugins && hyprpm enable hyprbars
+# Hyprbars plugin (window title bars — part of hyprland-plugins)
+hyprpm add https://github.com/hyprwm/hyprland-plugins
+hyprpm enable hyprbars
 
 # Network manager GUI
 sudo pacman -S networkmanager nm-connection-editor
@@ -369,19 +369,11 @@ sudo cp ~/dotfiles/ly/etc/ly/config.ini /etc/ly/config.ini
 
 ## Security
 
-| Layer | Config | Notes |
-|-------|--------|-------|
-| Firewall | nftables | Default drop on input/forward, no open ports |
-| SSH | sshd (disabled) | Key-only auth, no root login, AllowUsers 0\_o |
-| Brute-force | fail2ban | Active, defense-in-depth for sshd |
-| DNS | systemd-resolved | Only listener, localhost:53 |
-| Filesystem | btrfs | Subvols: @, @home, @pkg, @log with zstd:3 |
-
-No services are exposed to the network. The nftables ruleset allows only loopback, established connections, and ICMP.
+SSH is installed but disabled. No firewall configured. No services exposed to the network.
 
 ## Uninstall
 
 ```bash
-cd ~/dotfiles
+cd ~/dotfiles  # or wherever you cloned
 stow -D hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy zsh
 ```

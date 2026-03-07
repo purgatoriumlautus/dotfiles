@@ -43,12 +43,13 @@ bluetoothctl show 2>/dev/null  # bluetooth adapter?
 - [x] Remove setup section once complete
 
 ### README.md
-- [ ] Update any laptop-specific references (check if needed)
+- [x] Update security section (was wrong — described old laptop setup)
+- [x] Fix installation paths and hyprbars instructions
 
 ## Step 2: Stow & Test
 
 ```bash
-cd ~/dotfiles
+cd ~/new_dotfiles
 stow hypr waybar tofi kitty tmux mako nvim gtk xfce4 swappy zsh
 hyprctl reload
 ```
@@ -56,6 +57,20 @@ hyprctl reload
 ## Step 3: Commit
 
 Commit adjustments to master. The `laptop` branch preserves the old config.
+
+---
+
+## Migration Status: COMPLETE ✓
+
+Completed on magi (2026-03-07):
+- Packages installed: stow, mako, cliphist, slurp, swappy, wf-recorder, hyprsunset, brightnessctl
+- All 11 stow packages deployed (hypr waybar kitty tofi mako nvim tmux gtk xfce4 swappy zsh)
+- hyprbars plugin added via hyprpm
+- TPM plugins installed (tmux-gruvbox, tmux-resurrect, tmux-continuum)
+- Font fixed: Unifont → Terminess Nerd Font Mono (was broken in kitty config)
+- Workspace layout: 1→DP-3 (ASUS 165Hz), 2→DP-2 (BenQ 144Hz)
+- ly config copied to /etc/ly/config.ini
+- Old configs backed up to ~/.config-backup-20260307
 
 ## Hardware Reference
 
