@@ -53,7 +53,7 @@ setopt PROMPT_SUBST
 # [I/N] user@hostname ~/path (branch)
 # >
 # Device-specific: change hostname display per machine
-PROMPT='${vim_mode} %F{white}%n%f@%F{cyan}%m%f %F{white}%~%f${vcs_info_msg_0_}
+PROMPT='${vim_mode} %F{white}%n%f@%F{cyan}セレスチャル%f %F{white}%~%f${vcs_info_msg_0_}
 %F{green}>%f '
 
 # -----------------
@@ -158,3 +158,13 @@ bindkey '^G' fzf-cd-widget
 # zoxide (z replacement) — must be last
 # -----------------
 eval "$(zoxide init zsh)"
+
+# bun completions
+[ -s "/home/admni/.bun/_bun" ] && source "/home/admni/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Qemu
+export LIBVIRT_DEFAULT_URI="qemu:///system"

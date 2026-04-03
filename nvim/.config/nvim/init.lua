@@ -1,3 +1,5 @@
+if vim.g.vscode then dofile(vim.fn.stdpath('config') .. '/vscode.lua') return end
+
 -- ===================
 -- Mason bin path (for LSP servers)
 -- ===================

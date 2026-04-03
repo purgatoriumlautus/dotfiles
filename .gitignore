@@ -17,3 +17,9 @@ id_*
 # Shell history
 .zsh_history
 .bash_history
+
+#tmux pluging
+tmux/.config/tmux/plugins/
+
+# docs
+docs/
