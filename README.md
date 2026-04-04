@@ -118,6 +118,10 @@ System-level configs (grub, ly, nftables, sysctl) require sudo and manual copy.
 | `\rn` | Rename symbol |
 | `]c / [c` | Next/prev git change |
 | `\hp` | Preview hunk |
+| `ys<motion><char>` | Add surrounding (e.g. `ysiw(` wraps word in parens) |
+| `cs<old><new>` | Change surrounding (e.g. `cs"'` changes double to single quotes) |
+| `ds<char>` | Delete surrounding (e.g. `ds(` removes parens) |
+| `S<char>` | Surround selection (visual mode) |
 
 ## Color Palette
 

@@ -335,12 +335,13 @@ Zero animations, zero rounding, zero blur. Shadows disabled.
 
 ## Known Issues / Pending
 
-- [ ] zoxide init order in .zshrc — bun completions and bun PATH added after zoxide (should be before)
-- [ ] GRUB Shodan theme not deployed yet
+- [x] zoxide init order in .zshrc — bun completions and bun PATH added after zoxide (should be before)
+- [x] GRUB Shodan theme not deployed yet
 - [ ] Swap partition (sdb2) exists but not active
-- [ ] mpd — installed but disabled, needs proper setup (bind to localhost, configure library)
+- [x] mpd — installed but disabled, needs proper setup (bind to localhost, configure library)
 - [ ] sda BitLocker drive — planned for future use, not yet set up
 - [ ] dnscrypt-proxy blocklist needs periodic regeneration (run generate-domains-blocklist from /usr/share/dnscrypt-proxy/utils/generate-domains-blocklist/)
+- [x] Neovim italic font rendering is unreadable — needs fix in kitty or nvim config
 
 ## Update Instructions
 

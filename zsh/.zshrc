@@ -154,10 +154,6 @@ source /usr/share/fzf/completion.zsh
 bindkey -r '\ec'
 bindkey '^G' fzf-cd-widget
 
-# -----------------
-# zoxide (z replacement) — must be last
-# -----------------
-eval "$(zoxide init zsh)"
 
 # bun completions
 [ -s "/home/admni/.bun/_bun" ] && source "/home/admni/.bun/_bun"
@@ -168,3 +164,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Qemu
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+
+# -----------------
+# zoxide (z replacement) — must be last
+# -----------------
+eval "$(zoxide init zsh)"
