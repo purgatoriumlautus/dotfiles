@@ -73,8 +73,8 @@ alias ff="fastfetch"
 alias vim="nvim"
 alias ls="ls --color=auto"
 alias ll="ls -la"
-# alias kali="virsh start kali 2>/dev/null && virt-viewer --attach kali & 2>/dev/null || virt-viewer --attach kali &"
-# alias kalis="virsh shutdown kali"
+alias kali="virsh start kali 2>/dev/null && virt-viewer --attach kali & 2>/dev/null || virt-viewer --attach kali &"
+alias kalis="virsh shutdown kali"
 alias cd="z"
 
 
