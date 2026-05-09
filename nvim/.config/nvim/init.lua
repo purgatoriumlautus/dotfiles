@@ -99,6 +99,26 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.scrolloff = 30           -- cursor stays centered (your 'so=30')
 vim.opt.termguicolors = true     -- needed for modern colorschemes
 
+-- Diagnostic display (LSP errors)
+vim.diagnostic.config({
+  virtual_text = {                                  -- right-of-line truncated text, errors only
+    severity = { min = vim.diagnostic.severity.ERROR },  -- errors only — warnings/info/hints come via popup or gutter sign
+    source = 'if_many',                             -- show LSP source name when multiple LSPs attached
+    prefix = '■',
+  },
+  signs = true,                                     -- gutter sign for every diagnostic
+  underline = true,                                 -- underline the offending text
+  float = { border = 'single', source = true },    -- single-line border for hover/diagnostic floats
+})
+
+-- Auto-open diagnostic float after holding cursor on a line for 5s
+vim.opt.updatetime = 1500  -- ms before CursorHold fires
+vim.api.nvim_create_autocmd('CursorHold', {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false })
+  end,
+})
+
 -- Clear search highlight with Esc
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 
@@ -150,22 +170,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugins
 -- ===================
 require('lazy').setup({
-  -- tresitter for better highlighting
-  {
-    'nvim-treesitter/nvim-treesitter',
-    lazy = false,
-    build = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter').install({'c','python','html','k8s','dockerfile','yaml','javascript'})
-      vim.api.nvim_create_autocmd('FileType',{
-        pattern = {'c','python','html','k8s','dockerfile','yaml','javascript'},
-        callback = function()
-          vim.treesitter.start()
-        end
-
-      })
-    end
-  },
   -- Colorscheme
   --
   {
@@ -262,7 +266,11 @@ require('lazy').setup({
       })
     end,
     keys = {
-      { '<leader>ff', '<cmd>Telescope find_files<CR>', desc = 'Find files' },
+      { '<leader>ff', function()
+          require('telescope.builtin').find_files({
+            find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git', '--exclude', '.cache', '.', '/home', '/etc', '/mnt' },
+          })
+        end, desc = 'Find files in /home /etc /mnt' },
       { '<leader>fg', '<cmd>Telescope live_grep<CR>', desc = 'Grep in project' },
       { '<leader>fb', '<cmd>Telescope buffers<CR>', desc = 'Open buffers' },
       { '<leader>fr', '<cmd>Telescope oldfiles<CR>', desc = 'Recent files' },
@@ -409,7 +417,7 @@ require('lazy').setup({
 
       -- mason-lspconfig auto-setup
       require('mason-lspconfig').setup({
-        ensure_installed = { 'clangd', 'pyright', 'bashls', 'yamlls', 'dockerls', 'docker_compose_language_service' },
+        ensure_installed = { 'clangd', 'pyright', 'bashls', 'yamlls', 'dockerls', 'docker_compose_language_service','lua_ls','gopls'},
         handlers = {
           -- Default handler for all servers
           function(server_name)

@@ -146,9 +146,9 @@ bindkey -M vicmd 'P' vi-paste-clip   # P - paste from system clipboard
 # -----------------
 # FZF (fuzzy finder)
 # -----------------
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git . /'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .cache . /home /etc /mnt'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git . /'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git --exclude .cache . /home /etc /mnt'
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 bindkey -r '\ec'
