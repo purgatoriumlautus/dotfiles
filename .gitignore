@@ -1,6 +1,3 @@
-# Migration planning (not part of dotfiles)
-MIGRATION_PROMPT.md
-
 # Backup files
 *.bak
 *.swp
@@ -17,3 +14,10 @@ id_*
 # Shell history
 .zsh_history
 .bash_history
+
+# tmux plugins
+tmux/.config/tmux/plugins/
+
+# docs
+docs/
+grub/

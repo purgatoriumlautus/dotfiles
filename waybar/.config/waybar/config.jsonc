@@ -91,7 +91,7 @@
     "format": "󰂯",
     "format-connected": "󰂱 {device_alias}",
     "format-disabled": "󰂲",
-    "on-click": "blueman-manager",
+    "on-click": "pgrep blueman-manager && pkill -x blueman-manager || blueman-manager",
     "tooltip": false
   }
 

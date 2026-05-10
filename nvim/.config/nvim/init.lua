@@ -1,3 +1,80 @@
+if vim.g.vscode then dofile(vim.fn.stdpath('config') .. '/vscode.lua') return end
+
+-- ===================
+-- Vim Cheatsheet (advanced)
+-- ===================
+-- NAVIGATION
+--   { / }         jump paragraph up / down
+--   Ctrl+d / Ctrl+u   half-page down / up
+--   gd            go to definition (LSP)
+--   gr            go to references (LSP)
+--   Ctrl+o / Ctrl+i   jump back / forward in jump list
+--   gi            jump to last insert location
+--   gf            open file path under cursor
+--   %             jump to matching bracket
+--   *             search word under cursor forward
+--   #             search word under cursor backward
+--
+-- TEXT OBJECTS (after d, c, y, v)
+--   i) / a)       inside / around ()
+--   i] / a]       inside / around []
+--   i" / a"       inside / around ""
+--   it / at       inside / around HTML tag
+--   ip / ap       inside / around paragraph
+--
+-- POWER EDITS
+--   ciw           change word
+--   ci"           change inside quotes
+--   ci(           change inside parens
+--   da)           delete around parens (including them)
+--   .             repeat last edit
+--   gUiw / guiw   UPPERCASE / lowercase word
+--   + / -         increment / decrement number
+--   5+            increment by 5
+--
+-- SURROUND (nvim-surround)
+--   ysiw)         wrap word in ()
+--   yss)          wrap entire line in ()
+--   cs)]          change () to []
+--   ds)           delete surrounding ()
+--
+-- MACROS
+--   qa            record into register a
+--   q             stop recording
+--   @a            replay macro a
+--   5@a           replay 5 times
+--
+-- VISUAL MODE
+--   V             select whole line
+--   Ctrl+v        block select (columns)
+--   I (in block)  insert on all selected lines
+--   A (in block)  append on all selected lines
+--
+-- MARKS
+--   ma            set mark a at cursor
+--   'a            jump to mark a
+--   ''            jump to last position before jump
+--
+-- REGISTERS
+--   "ayiw         yank word into register a
+--   "ap           paste from register a
+--   :reg          view all registers
+--
+-- CUSTOM KEYBINDS
+--   \n            toggle file tree
+--   \e            toggle focus tree/file
+--   \ff / \fg     find files / grep project
+--   \fb / \fr     buffers / recent files
+--   \gd / \gq     open / close diff view
+--   \gh / \gH     file history (current / repo)
+--   \hp / \hr / \hb   preview / reset / blame hunk
+--   ]c / [c       next / prev git hunk
+--   ]d / [d       next / prev diagnostic
+--   K             hover docs
+--   \rn / \ca     rename / code action
+--   \t            toggle terminal
+--   \?            show all keymaps
+
 -- ===================
 -- Mason bin path (for LSP servers)
 -- ===================
@@ -22,6 +99,26 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.scrolloff = 30           -- cursor stays centered (your 'so=30')
 vim.opt.termguicolors = true     -- needed for modern colorschemes
 
+-- Diagnostic display (LSP errors)
+vim.diagnostic.config({
+  virtual_text = {                                  -- right-of-line truncated text, errors only
+    severity = { min = vim.diagnostic.severity.ERROR },  -- errors only — warnings/info/hints come via popup or gutter sign
+    source = 'if_many',                             -- show LSP source name when multiple LSPs attached
+    prefix = '■',
+  },
+  signs = true,                                     -- gutter sign for every diagnostic
+  underline = true,                                 -- underline the offending text
+  float = { border = 'single', source = true },    -- single-line border for hover/diagnostic floats
+})
+
+-- Auto-open diagnostic float after holding cursor on a line for 1.5s
+vim.opt.updatetime = 1500  -- ms before CursorHold fires
+vim.api.nvim_create_autocmd('CursorHold', {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false })
+  end,
+})
+
 -- Clear search highlight with Esc
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
 
@@ -34,11 +131,24 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highl
 -- Ctrl+A to select all
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
 
+-- Increment/decrement numbers (+ and - in normal mode)
+vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment number' })
+vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement number' })
+
 -- Tab navigation (same as your old config)
 for i = 1, 9 do
   vim.keymap.set('n', '<leader>' .. i, i .. 'gt', { desc = 'Go to tab ' .. i })
 end
 vim.keymap.set('n', '<leader>0', ':tablast<CR>', { desc = 'Go to last tab' })
+
+-- Vertical split
+vim.keymap.set('n', '<leader>v', '<cmd>vsplit<CR>', { desc = 'Vertical split' })
+
+-- Window navigation
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Window down' })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Window up' })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
 
 -- Disable arrow keys in normal mode (use hjkl)
 vim.keymap.set('n', '<Up>', '<Nop>')
@@ -69,7 +179,24 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugins
 -- ===================
 require('lazy').setup({
+  -- tresitter for better highlighting
+  {
+    'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    build = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter').install({'c','python','html','go','bash','dockerfile','yaml','javascript'})
+      vim.api.nvim_create_autocmd('FileType',{
+        pattern = {'c','python','html','go','sh','dockerfile','yaml','javascript'},
+        callback = function()
+          vim.treesitter.start()
+        end
+
+      })
+    end
+  },
   -- Colorscheme
+  --
   {
     'folke/tokyonight.nvim',
     lazy = false,      -- load immediately
@@ -164,7 +291,11 @@ require('lazy').setup({
       })
     end,
     keys = {
-      { '<leader>ff', '<cmd>Telescope find_files<CR>', desc = 'Find files' },
+      { '<leader>ff', function()
+          require('telescope.builtin').find_files({
+            find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git', '--exclude', '.cache', '.', '/home', '/etc', '/mnt' },
+          })
+        end, desc = 'Find files in /home /etc /mnt' },
       { '<leader>fg', '<cmd>Telescope live_grep<CR>', desc = 'Grep in project' },
       { '<leader>fb', '<cmd>Telescope buffers<CR>', desc = 'Open buffers' },
       { '<leader>fr', '<cmd>Telescope oldfiles<CR>', desc = 'Recent files' },
@@ -219,6 +350,19 @@ require('lazy').setup({
     end,
   },
 
+  -- Git diff viewer (side-by-side diffs, file history)
+  {
+    'sindrets/diffview.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<leader>gd', '<cmd>DiffviewOpen<CR>', desc = 'Open diff view' },
+      { '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', desc = 'File history (current)' },
+      { '<leader>gH', '<cmd>DiffviewFileHistory<CR>', desc = 'File history (repo)' },
+      { '<leader>gq', '<cmd>DiffviewClose<CR>', desc = 'Close diff view' },
+    },
+    opts = {},
+  },
+
   -- Statusline
   {
     'nvim-lualine/lualine.nvim',
@@ -252,6 +396,17 @@ require('lazy').setup({
     end,
   },
 
+  -- Autopairs (Rust-powered, replaces nvim-autopairs)
+  {
+    'saghen/blink.pairs',
+    version = '*',
+    dependencies = { 'saghen/blink.download' },
+    opts = {
+      mappings = { enabled = true },
+      highlights = { enabled = true },
+    },
+  },
+
   -- LSP config
   {
     'neovim/nvim-lspconfig',
@@ -259,11 +414,11 @@ require('lazy').setup({
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
     },
     config = function()
       local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       -- Keybinds on LSP attach
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -276,12 +431,18 @@ require('lazy').setup({
           vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+
+          -- Built-in signature help (replaces lsp_signature.nvim)
+          vim.api.nvim_create_autocmd('CursorHoldI', {
+            buffer = args.buf,
+            callback = vim.lsp.buf.signature_help,
+          })
         end,
       })
 
       -- mason-lspconfig auto-setup
       require('mason-lspconfig').setup({
-        ensure_installed = { 'pyright', 'bashls', 'yamlls', 'dockerls', 'docker_compose_language_service' },
+        ensure_installed = { 'clangd', 'pyright', 'bashls', 'yamlls', 'dockerls', 'docker_compose_language_service', 'lua_ls', 'gopls' },
         handlers = {
           -- Default handler for all servers
           function(server_name)
@@ -307,73 +468,59 @@ require('lazy').setup({
     end,
   },
 
-  -- Completion engine
+  -- Completion engine (Rust-powered, replaces nvim-cmp + 5 source plugins)
   {
-    'hrsh7th/nvim-cmp',
-    lazy = false,  -- load immediately
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+    'saghen/blink.cmp',
+    version = '*',
+    lazy = false,
+    dependencies = { 'saghen/blink.download' },
+    opts = {
+      keymap = {
+        preset = 'default',
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+      },
+      sources = {
+        default = { 'lsp', 'snippets', 'buffer', 'path' },
+      },
+      completion = {
+        documentation = { auto_show = true },
+      },
     },
-    config = function()
-      local cmp = require('cmp')
-      local luasnip = require('luasnip')
+  },
+  -- Dropdown terminal (toggle with C-`)
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    opts = {
+      open_mapping = '<leader>t',
+      direction = 'horizontal',
+      size = 15,
+      shade_terminals = false,
+    },
+  },
 
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        completion = {
-          autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },  -- auto-trigger
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp', priority = 1000 },  -- LSP first
-          { name = 'luasnip', priority = 750 },
-          { name = 'buffer', priority = 500 },
-          { name = 'path', priority = 250 },
-        }),
-      })
+  {
+    'kylechui/nvim-surround',
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup({})
     end,
   },
-{
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  },
-  keys = {
-    {
-      "<leader>?",
-      function()
-        require("which-key").show({ global = false })
-      end,
-      desc = "Buffer Local Keymaps (which-key)",
+
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      {
+        '<leader>?',
+        function()
+          require('which-key').show({ global = true })
+        end,
+        desc = 'All keymaps (which-key)',
+      },
     },
   },
-},
 })

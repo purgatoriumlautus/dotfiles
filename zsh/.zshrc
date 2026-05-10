@@ -53,7 +53,7 @@ setopt PROMPT_SUBST
 # [I/N] user@hostname ~/path (branch)
 # >
 # Device-specific: change hostname display per machine
-PROMPT='${vim_mode} %F{white}%n%f@%F{cyan}%m%f %F{white}%~%f${vcs_info_msg_0_}
+PROMPT='${vim_mode} %F{white}%n%f@%F{cyan}マギ%f %F{white}%~%f${vcs_info_msg_0_}
 %F{green}>%f '
 
 # -----------------
@@ -65,6 +65,7 @@ export EDITOR='nvim'
 # PATH
 # -----------------
 export PATH=$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 # -----------------
 # Aliases
@@ -73,9 +74,8 @@ alias ff="fastfetch"
 alias vim="nvim"
 alias ls="ls --color=auto"
 alias ll="ls -la"
-alias kali="virsh start kali 2>/dev/null && virt-viewer --attach kali & 2>/dev/null || virt-viewer --attach kali &"
-alias kalis="virsh shutdown kali"
 alias cd="z"
+alias claer="clear"
 
 
 # Git aliases
@@ -90,18 +90,14 @@ alias gco="git checkout"
 alias gb="git branch"
 alias glog="git log --oneline --graph"
 
-# -----------------
-# zoxide (z replacement)
-# -----------------
-eval "$(zoxide init zsh)"
 
 # -----------------
 # NVM (Node Version Manager)
 # -----------------
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+#
 # -----------------
 # Vi mode
 # -----------------
@@ -151,10 +147,16 @@ bindkey -M vicmd 'P' vi-paste-clip   # P - paste from system clipboard
 # -----------------
 # FZF (fuzzy finder)
 # -----------------
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git . /'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .cache . /home /etc /mnt'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git . /'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git --exclude .cache . /home /etc /mnt'
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 bindkey -r '\ec'
 bindkey '^G' fzf-cd-widget
+
+
+# -----------------
+# zoxide (z replacement)
+# -----------------
+eval "$(zoxide init zsh)"
